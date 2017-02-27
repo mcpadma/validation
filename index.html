@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>login page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="reg1.js"></script>
+    <!-- Email exact "/^[\w!#$%& '*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/" -->
+</head>
+
+<body>
+    <nav>
+        <ul id="menu">
+            <li><a href="#home">Home</a></li>
+            <li>
+                <a href="#category">Reference</a>
+                <ul>
+                    <li><a href="https://www.w3schools.com/html/">HTML</a></li>
+                    <li><a href="https://www.tutorialspoint.com/css/">CSS</a></li>
+                </ul>
+            </li>
+            <li><a href="#register">Register</a></li>
+            <li><a href="#login">Login</a></li>
+
+        </ul>
+    </nav>
+    <main>
+        <div id="home" style="padding-top:70px;width:100%; height: 500px;background:cream;"> Home content</div>
+        <div id="category"> Reference content</div>
+        <div id="register">
+            <p style="text-align:center; font-weight:bold;font-size:2em;">Registration</p>
+            <div class="form">
+
+                <form id="contactform" method="post" onSubmit="return formValidationSubmit();">
+                    <p class="contact"><label for="name">Name</label></p>
+                    <input id="cname" name="cname" placeholder="First and last name" tabindex="1" type="text"><span id="usernameError"></span>
+                    <p class="contact"><label for="email">Email</label></p>
+                    <input id="cemail" name="cemail" placeholder="example@domain.com" tabindex="2" type="email">
+                    <p class="contact"><label for="username">Create a username</label></p>
+                    <input id="username" name="username" placeholder="username" required="" minlength="8" type="text">
+                    <p class="contact"><label for="password">Create a password</label></p>
+                    <input type="password" id="password" name="password" type="text" required="">
+                    <p class="contact"><label for="repassword">Confirm your password</label></p>
+                    <input type="password" id="cpassword" name="cpassword" type="text">
+                    <select class="select-style gender" name="gender">
+                <option value="select">i am..</option>
+                <option value="m">Male</option>
+                <option value="f">Female</option>
+                <option value="others">Other</option>
+                </select><br><br>
+                    <p class="contact"><label for="phone">Mobile phone</label></p>
+                    <input id="phone" name="phone" placeholder="phone number" type="text" minlength="10" maxlength="10"> <br>
+                    <input class="buttom" name="submit" id="submit" tabindex="5" value="Sign me up!" type="submit">
+                </form>
+            </div>
+        </div>
+        <div id="login">
+            <p style="text-align:center; font-weight:bold;font-size:2em;">Login</p>
+            <form id="login-form" method="post">
+                <input id="userName" type="text" placeholder="Enter Username" value="" /><br>
+                <input id="userPw" type="password" placeholder="Enter Password" value="" /><br>
+                <input id="login_btn" type="submit" value="Login" onClick="login()" /> <br>
+            </form>
+        </div>
+    </main>
+    <script>
+        function formValidationSubmit() {
+            //var cname = document.getElementById("cname").value;
+            //var cemail = document.getElementById("cemail").value;
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var cpassword = document.getElementById("cpassword").value;
+            var phone = document.getElementById("phone").value;
+
+            var regexp1 = new RegExp("[^a-zA-Z]");
+            var mobreg = new RegExp("[]");
+
+            if (regexp1.test(username)) {
+                alert("alpha chars only allowed");
+                return false;
+            } else if (document.getElementById("cname").value.length == " ") {
+                document.getElementById("cname").value = " ";
+                document.getElementById("cname").focus();
+                return false;
+            } else if (document.getElementById("cemail").value.length == " ") {
+                document.getElementById("cemail").value = " ";
+                document.getElementById("cemail").focus();
+                return false;
+            } else if (password != cpassword) {
+                alert("password does not match");
+                return false;
+            } else if (isNaN(phone)) {
+                alert("mobile numer Invalid");
+                return false;
+            } else if (!(phone.charAt(0) == "9" || phone.charAt(0) == "8" || phone.charAt(0) == "7")) {
+                alert("Mobile No. should start with 9 or 8 or 7");
+                document.getElementById('phone').focus();
+                return false;
+            } else {
+                if (typeof(Storage) !== "undefined") {
+                    var cname = document.getElementById("cname").value;
+                    var cemail = document.getElementById("cemail").value;
+                    var username = document.getElementById("username").value;
+                    var password = document.getElementById("password").value;
+                    var cpassword = document.getElementById("cpassword").value;
+                    var phone = document.getElementById("phone").value;
+
+
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("password", password);
+
+                    console.log(localStorage.getItem(password))
+                    alert("registration sucessful!!!")
+                }
+            }
+        }
+
+        function login() {
+
+            // stored data 
+            var storedName = localStorage.getItem("username");
+            var storedPw = localStorage.getItem("password");
+
+            // entered data 
+            var userName = document.getElementById('userName').value;
+            var userPw = document.getElementById('userPw').value;
+
+            // check  stored data 
+            if (userName == storedName && userPw == storedPw) {
+                alert('You are loged in.');
+            } else {
+                alert('ERROR');
+            }
+        }
+    </script>
+</body>
+
+</html>
